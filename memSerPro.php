@@ -1,7 +1,9 @@
+<?php include('include/config.php'); ?>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Bar Chart Page</title>
+    <title>Piechart Page</title>
     <style type="text/css">
         BODY {
             width: 550PX;
@@ -17,61 +19,55 @@
 </head>
 <body>
 <div id="chart-container">
-    <canvas id="graphCanvas"></canvas>
+    <canvas id="graphCanvasPro"></canvas>
 </div>
 
 <script>
-      $(document).ready(function () {
-      showGraph();
-      });
+    $(document).ready(function () {
+        showGraph();
+    });
 
-      function showGraph() {
-      $.post("data_memSerPro.php", function (data) {
-            console.log(marks);
-
+    function showGraph() {
+        $.post("data_memSerPro.php", function (data) {
+            console.log(data);
             var name = ["ใช้บริการ","ซื้อสินค้า"];
-            var marks = [0, 0];
+            var marks = [];
 
             for (var i in data) {
-                  marks[0] += data[i].Service_Count;
-                  marks[1] += data[i].Product_Count;
+                marks.push(data[i].Service_Count);
+                marks.push(data[i].Product_Count); 
             }
 
             var chartdata = {
-                  labels: name,
-                  datasets: [
-                  {
-                        label: 'จำนวนครั้งที่มาใช้บริการและซื้อสินค้า',
-                        backgroundColor: ['#FF6384', '#36A2EB'],
+                labels: name,
+                datasets: [
+                    {
+                        label: 'จำนวนครั้งที่มาใช้บริการ',
+                        backgroundColor: '#FF6384',
                         borderColor: '#BFEA7C',
-                        hoverBackgroundColor: ['#FFCF96', '#CDFADB'],
+                        hoverBackgroundColor: '#FFCF96',
                         hoverBorderColor: '#666666',
-                        data: marks
-                  }
-                  ]
+                        data: [marks[0], 0] // ใช้บริการเป็นแท่งแรก และให้แท่งซื้อสินค้าเป็น 0
+                    },
+                    {
+                        label: 'จำนวนครั้งที่มาซื้อสินค้า',
+                        backgroundColor: '#36A2EB',
+                        borderColor: '#BFEA7C',
+                        hoverBackgroundColor: '#CDFADB',
+                        hoverBorderColor: '#666666',
+                        data: [0, marks[1]] // ใช้บริการเป็น 0 และซื้อสินค้าเป็นแท่งที่สอง
+                    }
+                ]
             };
 
-            var graphTarget = $("#graphCanvas");
+            var graphTarget = $("#graphCanvasPro");
 
             var barGraph = new Chart(graphTarget, {
-                  type: 'bar',
-                  data: chartdata,
-                  options: {
-                  scales: {
-                        xAxes: [{
-                              stacked: false
-                        }],
-                        yAxes: [{
-                              stacked: false,
-                              ticks: {
-                              beginAtZero: true
-                              }
-                        }]
-                  }
-                  }
+                type: 'bar',
+                data: chartdata
             });
-      });
-      }
+        });
+    }
 </script>
 </body>
 </html>
