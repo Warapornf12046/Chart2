@@ -27,24 +27,23 @@
 
       function showGraph() {
       $.when(
-            $.post("data_memSer.php"),
-            $.post("data_memSer.php")
+            $.post("data_memPro.php"),
+            $.post("data_memPro.php")
       ).done(function (dataPro, dataSer) {
             console.log(dataPro);
             console.log(dataSer);
 
-            var name = ["สีข้าว", "คัด/ฝัดเมล็ดข้าว", "อบข้าว", "สีข้าว และ คัด/ฝัดเมล็ดข้าว", "สีข้าว และ อบข้าว", "คัด/ฝัดเมล็ดข้าว และ อบข้าว"
-                              , "สีข้าว และ คัด/ฝัดเมล็ดข้าว และ อบข้าว"];
+            var name = ["รำ", "แกลบ", "ข้าวท่อน", "ข้าวปลาย"];
 
             var marks1 = [];
             var marks2 = [];
 
             for (var i in dataPro[0]) {
-                  marks1.push(dataPro[0][i].Total_Service_Count);
+                  marks1.push(dataPro[0][i].Total_Order_Count);
             }
 
             for (var i in dataSer[0]) {
-                  marks2.push(dataSer[0][i].Total_Service_Weight);
+                  marks2.push(dataSer[0][i].Total_Weight_Purchased);
             }
 
             var chartdata = {
