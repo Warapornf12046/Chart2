@@ -12,13 +12,13 @@ if (!$conn) {
 
 // เตรียมคำสั่ง SQL เพื่อดึงข้อมูล
 $sqlQuery = "SELECT
-                sp.ServiceProduct_Name,
-                COUNT(os.OrderService_Id) AS Usage_Count
+            sp.ServiceProduct_Name,
+            COUNT(os.OrderService_Id) AS Usage_Count
             FROM
-                orderservice os
-            INNER JOIN serviceandproduct sp ON os.ServiceProduct_Id = sp.ServiceProduct_Id
+            orderservice os
+            INNER JOIN serviceandproduct sp ON os.ServiceProduct_Name = sp.ServiceProduct_Name
             GROUP BY
-                sp.ServiceProduct_Name
+            sp.ServiceProduct_Name
             ";
 
 // ทำการส่งคำสั่ง SQL ไปที่ฐานข้อมูล

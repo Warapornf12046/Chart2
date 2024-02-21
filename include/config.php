@@ -2,7 +2,7 @@
 $host = 'localhost';
 $username = 'root';
 $password = 'wp120646';
-$database = 'ip';
+$database = 'iprice';
 
 // PDO
 $pdo = new PDO( "mysql:host={$host}; dbname={$database}", $username, $password, [ PDO::ATTR_EMULATE_PREPARES => false ] );

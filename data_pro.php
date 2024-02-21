@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-include('include\config.php');
+include('include/config.php');
 
 // ทำการเชื่อมต่อฐานข้อมูล
 $conn = mysqli_connect($host, $username, $password, $database);
@@ -11,10 +11,13 @@ if (!$conn) {
 }
 
 // เตรียมคำสั่ง SQL เพื่อดึงข้อมูล
-$sqlQuery = "SELECT sp.ServiceProduct_Name, COUNT(op.ServiceProduct_Id) AS Total_Order
-            FROM orderproduct op
-            INNER JOIN serviceandproduct sp ON op.ServiceProduct_Id = sp.ServiceProduct_Id
-            GROUP BY op.ServiceProduct_Id";
+$sqlQuery = "SELECT 
+            SUM(CASE WHEN Kg_Rice_bran != 0 THEN 1 ELSE 0 END) AS countbran,
+            SUM(CASE WHEN Kg_Husk != 0 THEN 1 ELSE 0 END) AS counthusk,
+            SUM(CASE WHEN Kg_Rice_chunks != 0 THEN 1 ELSE 0 END) AS countchunks,
+            SUM(CASE WHEN Kg_Broken_rice != 0 THEN 1 ELSE 0 END) AS countbroken
+            FROM 
+            orderproduct";
 
 // ทำการส่งคำสั่ง SQL ไปที่ฐานข้อมูล
 $result = mysqli_query($conn, $sqlQuery);

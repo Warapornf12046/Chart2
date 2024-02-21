@@ -30,12 +30,15 @@
     function showGraph() {
         $.post("data_pro.php", function (data) {
             console.log(data);
-            var name = [];
+            var name = ["รำข้าว","แกลบ","ข้าวท่อน","ข้าวปลาย"];
             var marks = [];
 
             for (var i in data) {
-                name.push(data[i].ServiceProduct_Name);
-                marks.push(data[i].Total_Order); // แก้ไขจาก TotalService เป็น Usage_Count
+                // name.push(data[i].ServiceProduct_Name);
+                marks.push(data[i].countbran); 
+                marks.push(data[i].counthusk); 
+                marks.push(data[i].countchunks); 
+                marks.push(data[i].countbroken); 
             }
 
             var chartdata = {
